@@ -1,0 +1,35 @@
+#limpia la memoria
+
+rm(list=ls()) #remove
+gc() #garbage collector
+
+#Definir donde vamos a tener los archivos
+
+setwd('C:/Users/....') #setear la ruta donde vamos a exportar el archivo
+
+# Instalar paquetes que se van a utilizar
+
+install.packages("tidyverse")
+install.packages("rvest")
+
+# Levantar librerias
+
+  library(tidyverse)
+  library(rvest)
+
+# Script jugadores por liga
+
+#Argentina
+
+argentina1 = "https://fbref.com/en/comps/21/stats/Superliga-Argentina-Stats" #cambiar para cada liga que se quiere buscar
+
+Argentina  =  argentina1 %>%
+  read_html %>%
+  html_nodes(xpath = '//comment()') %>%
+  html_text() %>%
+  paste(collapse='') %>%  
+  read_html() %>%
+  html_node("#stats_standard") %>%  
+  html_table()
+
+write.csv(Argentina,'Argentina1.csv')
